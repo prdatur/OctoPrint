@@ -223,6 +223,7 @@ class MachineCom(object):
 		self._pauseWaitTimeLost = 0.0
 		self._currentTool = 0
 		self._formerTool = None
+		self._simple_gcode_receive_callback = None
 
 		self._long_running_command = False
 		self._heating = False
@@ -335,6 +336,13 @@ class MachineCom(object):
 	@property
 	def _active(self):
 		return self._monitoring_active and self._send_queue_active
+
+
+	##~~ Set the given callback as a simple gcode receive callback which can do things after a gcode has been received.
+
+	def setSimpleGcodeReceiveCallback(self, callback):
+		self._simple_gcode_receive_callback = callback
+
 
 	##~~ internal state management
 
@@ -1626,6 +1634,11 @@ class MachineCom(object):
 
 		if ret != "":
 			try:
+
+				# Let the callback can do stuff on gcode receives.
+				if self._simple_gcode_receive_callback is not None:
+					self._simple_gcode_receive_callback(ret);
+
 				self._log("Recv: " + sanitize_ascii(ret))
 			except ValueError as e:
 				self._log("WARN: While reading last line: %s" % e)
