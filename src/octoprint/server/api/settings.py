@@ -115,6 +115,7 @@ def getSettings():
 		"terminalFilters": s.get(["terminalFilters"]),
 		"scripts": {
 			"gcode": {
+				"whilePrinterConnecting": None,
 				"afterPrinterConnected": None,
 				"beforePrintStarted": None,
 				"afterPrintCancelled": None,

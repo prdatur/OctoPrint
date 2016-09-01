@@ -30,6 +30,12 @@
         </div>
     </div>
     <div class="control-group">
+        <label class="control-label">{{ _('While connecting to printer (Before SDCard listing)') }}</label>
+        <div class="controls">
+            <textarea rows="4" class="block" data-bind="value: scripts_gcode_whilePrinterConnecting"></textarea>
+        </div>
+    </div>
+    <div class="control-group">
         <label class="control-label">{{ _('After connection to printer is established') }}</label>
         <div class="controls">
             <textarea rows="4" class="block" data-bind="value: scripts_gcode_afterPrinterConnected"></textarea>

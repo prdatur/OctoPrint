@@ -1451,12 +1451,14 @@ class MachineCom(object):
 
 		self.resetLineNumbers()
 
+		payload = dict(port=self._port, baudrate=self._baudrate)
+
+		self.sendGcodeScript("whilePrinterConnecting", replacements=dict(event=payload))
 		if self._sdAvailable:
 			self.refreshSdFiles()
 		else:
 			self.initSdCard()
 
-		payload = dict(port=self._port, baudrate=self._baudrate)
 		eventManager().fire(Events.CONNECTED, payload)
 		self.sendGcodeScript("afterPrinterConnected", replacements=dict(event=payload))
 
